@@ -13,3 +13,15 @@ def fetch_users(request):
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
     return Response(serializer.data)
+
+
+def create_users(request):
+    if request.method == 'POST':
+        data = validate_user_data(request.data)
+
+    return Response()
+
+
+def validate_user_data(data):
+    # check that data contains the correct information, nothing more, could be less
+    return data

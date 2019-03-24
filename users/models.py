@@ -14,6 +14,7 @@ class User(TimeStampModel):
         return self.first_name + ' ' + self.last_name
 
 
+
 class Client(TimeStampModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
