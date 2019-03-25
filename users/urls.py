@@ -8,4 +8,5 @@ urlpatterns = [
     #     views.create_account,
     #     name='account_creation',)
     path('fetch_users/', views.fetch_users),
+    path('create_user/', views.create_user),
 ]
