@@ -9,4 +9,7 @@ urlpatterns = [
     #     name='account_creation',)
     path('fetch_users/', views.fetch_users),
     path('create_user/', views.create_user),
+    path('update_user/<int:user_id>', views.update_user),
+    path('delete_user/<int:user_id>', views.delete_user),
+    path('fetch_user/<int:user_id>', views.fetch_user),
 ]

@@ -27,6 +27,36 @@ def create_user(request):
     else:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+def update_user(request, user_id):
+    if request.method != 'PUT':
+        return redirect('/fetch_users/')
+
+    user = User.objects.get(pk=user_id)
+    srl = UserSerializer(user, data=request.data)
+    if srl.is_valid():
+        srl.save()
+        return Response(srl.data, status=status.HTTP_202_ACCEPTED)
+    else:
+        return Response(srl.errors, status=status.HTTP_400_BAD_REQUEST)
+
+def delete_user(request, user_id):
+    if request.method != 'DELETE':
+        return redirect('/fetch_users/')
+
+    try:
+        user = User.objects.get(pk=user_id)
+        user.destroy() # this should only update the deleted_at field instead of actually hard delete
+    except User.DoesNotExist:
+        return Response("User does not exist!", status=status.HTTP_204_NO_CONTENT)
+
+def fetch_user(request, user_id):
+    try:
+        breakpoint()
+        user = User.objects.get(pk=user_id)
+        serializer = UserSerializer(user, many=False)
+        return Response(serializer.data)
+    except User.DoesNotExist:
+        return Response("User does not exist!", status=status.HTTP_204_NO_CONTENT)
 
 def validate_user_data(data):
     # check that data contains the correct information, nothing more, could be less
