@@ -1,14 +1,10 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 from PocketService.abstract_models import TimeStampModel
 
 
 # Create your models here.
-class User(TimeStampModel):
-    first_name = models.CharField(max_length=128)
-    last_name = models.CharField(max_length=128)
-    email = models.CharField(max_length=128)
-    password = models.CharField(max_length=128, null=False)
-    phone_number = models.BigIntegerField(blank=True, null=True)
+class User(AbstractUser):
 
     def user_display_name(self):
         return self.first_name + ' ' + self.last_name
