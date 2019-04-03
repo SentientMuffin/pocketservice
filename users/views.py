@@ -22,6 +22,8 @@ def create_user(request):
     if request.method == 'GET':
         return redirect('/fetch_users/')
 
+    # adding username to request.data
+    request.data['username'] = request.data['email']
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()

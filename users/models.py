@@ -6,7 +6,7 @@ from PocketService.abstract_models import TimeStampModel
 
 # Create your models here.
 class User(AbstractUser):
-    phone_regex = RegexValidator(regex=r'^\+?1?\d{9, 10}$', message="Phone numbers must be 10 digits.")
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{10}$', message="Phone numbers must be 10 digits.")
     phone_number = models.CharField(validators=[phone_regex], max_length=12, blank=True)
 
     def user_display_name(self):
