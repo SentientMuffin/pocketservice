@@ -19,7 +19,6 @@ def fetch_users(request):
 
 @api_view(['POST'])
 def create_user(request):
-    breakpoint()
     if request.method == 'GET':
         return redirect('/fetch_users/')
 
