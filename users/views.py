@@ -1,10 +1,10 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .models import User
+from .models import *
 from rest_framework.decorators import api_view
 from rest_framework import status
-from .serializers import UserSerializer
+from .serializers import *
 from django.shortcuts import redirect
 
 
@@ -21,12 +21,21 @@ def fetch_users(request):
 def create_user(request):
     if request.method == 'GET':
         return redirect('/fetch_users/')
-
+    breakpoint()
     # adding username to request.data
     request.data['username'] = request.data['email']
     serializer = UserSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
+    if serializer.is_valid() and (request.data['user_type'] in ['client', 'worker']):
+        user = serializer.save()
+
+        # Create corresponding sub model records
+        if request.data['user_type'] == 'client':
+            cli = Client.create(user)
+            cli.save()
+        else:
+            sw = ServiceWorker.create(user)
+            sw.save()
+
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     else:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

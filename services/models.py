@@ -1,6 +1,6 @@
 from django.db import models
 from PocketService.abstract_models import TimeStampModel
-from users import models as user_models
+from users.models import *
 
 
 # Create your models here.
@@ -9,7 +9,7 @@ class ClientRequest(TimeStampModel):
     start_time = models.DateTimeField(blank=False)
 
     # Belongs to Client
-    client = models.ForeignKey(user_models.Client, on_delete=models.CASCADE)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
 
 
 class ServiceJob(TimeStampModel):
@@ -20,13 +20,13 @@ class ServiceJob(TimeStampModel):
     # Belongs to ClientRequest
     client_request = models.ForeignKey(ClientRequest, on_delete=models.CASCADE)
     # Belongs to ServiceWorker
-    service_worker = models.ForeignKey(user_models.ServiceWorker, on_delete=models.CASCADE)
+    service_worker = models.ForeignKey(ServiceWorker, on_delete=models.CASCADE)
 
 
 class WorkerCompleteRating(TimeStampModel):
 
     # Has and belongs to ServiceWorker
-    service_worker = models.OneToOneField(user_models.ServiceWorker, on_delete=models.CASCADE)
+    service_worker = models.OneToOneField(ServiceWorker, on_delete=models.CASCADE)
 
 
 class ServiceRating(TimeStampModel):
@@ -36,8 +36,8 @@ class ServiceRating(TimeStampModel):
     personality_rating = models.DecimalField(max_digits=2, decimal_places=1)
 
     # Belongs to ServiceWorker
-    service_worker = models.ForeignKey(user_models.ServiceWorker, on_delete=models.CASCADE)
+    service_worker = models.ForeignKey(ServiceWorker, on_delete=models.CASCADE)
     # Has and Belongs to ServiceJob
-    service_job = models.OneToOneField(ServiceJob, on_delete=models.CASCADE, primary_key=True)
+    service_job = models.OneToOneField(ServiceJob, on_delete=models.CASCADE, unique=True)
     # Belongs to WorkerCompleteRating
     worker_complete_rating = models.ForeignKey(WorkerCompleteRating, on_delete=models.CASCADE)
