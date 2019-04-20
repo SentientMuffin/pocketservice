@@ -8,6 +8,8 @@ from .serializers import *
 from django.shortcuts import redirect
 
 # Create your views here.
+
+# ClientRequest Block
 @api_view(['GET'])
 def fetch_client_requests(request, client_id):
     crqs = ClientRequest.objects.filter(client__user_id=client_id)
@@ -42,3 +44,6 @@ def delete_client_request(request, request_id):
         return Response("ClientRequest successfuly deleted", status=status.HTTP_202_ACCEPTED)
     except ClientRequest.DoesNotExist:
         return Response("ClientRequest does not exist!", status=status.HTTP_204_NO_CONTENT)
+
+
+# Other model blocks. Not sure if needed at this point
